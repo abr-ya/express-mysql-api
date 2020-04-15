@@ -4,12 +4,26 @@ const router = Router()
 
 // получение списка задач
 router.get('/', (req, res) => {
-    res.json({text: 'get'})
+	try {
+		res.json({text: 'get'})		
+	} catch (error) {
+		console.log(error)
+		res.status(500).json({message: 'Server error!'})
+	}
 })
 
 // создание новой задачи
-router.post('/', (req, res) => {
-
+router.post('/', async (req, res) => {
+	try {
+		const newItem = await Todo.create({
+			title: req.body.title,
+			done: false
+		})
+		res.status(201).json({newItem}) // 201 - был создан
+	} catch (error) {
+		console.log(error)
+		res.status(500).json({message: 'Server error!'})
+	}
 })
 
 // изменение задачи

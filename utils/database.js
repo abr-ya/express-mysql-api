@@ -6,6 +6,7 @@ const PASS = 'hSeD1G3I1iD13eQz'
 const CONF = {
     host: 'localhost',
     dialect: 'mysql',
+    timezone: '+03:00',
 }
 
 const sequelize = new Sequelize(DB_NAME, USER, PASS, CONF)
