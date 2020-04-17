@@ -7,6 +7,18 @@ new Vue({el: '#app',
 			todos: []
 		}
 	},
+	// lyfecycle
+	created() {
+		fetch('/api/todo', {
+			method: 'get'
+		})
+			.then(res => res.json())
+			.then(todos => {
+				console.log('get todos: ', todos)
+				this.todos = todos
+			})
+			.catch(error => console.log(error))
+	},
 	methods: {
 		addTodo() {
 			const title = this.todoTitle.trim()

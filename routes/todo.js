@@ -3,9 +3,10 @@ const Todo = require('../models/todo')
 const router = Router()
 
 // получение списка задач
-router.get('/', (req, res) => {
+router.get('/', async (req, res) => {
 	try {
-		res.json({text: 'get'})		
+		const todos = await Todo.findAll()
+		res.status(200).json(todos)
 	} catch (error) {
 		console.log(error)
 		res.status(500).json({message: 'Server error!'})
