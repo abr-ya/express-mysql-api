@@ -41,8 +41,15 @@ router.put('/:id', async (req, res) => {
 })
 
 // удаление задачи
-router.delete('/:id', (req, res) => {
-
+router.delete('/:id', async (req, res) => {
+	try {
+		const item = await Todo.findByPk(+req.params.id)
+		await item.destroy()
+		res.status(204).json({}) // 204 - контента нет, но все ОК
+	} catch (error) {
+		console.log(error)
+		res.status(500).json({message: 'Server error!'})
+	}
 })
 
 module.exports = router
