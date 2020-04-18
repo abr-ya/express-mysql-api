@@ -28,8 +28,16 @@ router.post('/', async (req, res) => {
 })
 
 // изменение задачи
-router.put('/:id', (req, res) => {
-
+router.put('/:id', async (req, res) => {
+	try {
+		const item = await Todo.findByPk(+req.params.id)
+		item.done = req.body.done
+		await item.save()
+		res.status(200).json({item}) // 200
+	} catch (error) {
+		console.log(error)
+		res.status(500).json({message: 'Server error!'})
+	}
 })
 
 // удаление задачи

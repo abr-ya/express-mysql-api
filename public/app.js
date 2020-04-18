@@ -25,12 +25,6 @@ new Vue({el: '#app',
 			if (!title) {
 				return
 			}
-			// this.todos.push({
-			// 	title: title,
-			// 	id: Math.random(),
-			// 	done: false,
-			// 	date: new Date()
-			// })
 			fetch('/api/todo', {
 				method: 'post',
 				headers: {'Content-type': 'application/json'},
@@ -41,6 +35,21 @@ new Vue({el: '#app',
 				console.log(newItem)
 				this.todos.push(newItem)
 				this.todoTitle = ''
+			})
+			.catch(error => console.log(error))
+		},
+		doneTodo(id) {
+			console.log('done', id);
+			fetch('/api/todo/' + id, {
+				method: 'put',
+				headers: {'Content-type': 'application/json'},
+				body: JSON.stringify({done: true})
+			})
+			.then(res => res.json())
+			.then(({item}) => {
+				console.log(item)
+				this.todos = this.todos.map(oldItem => (item.id === oldItem.id ? item : oldItem))
+				console.log(this.todos)
 			})
 			.catch(error => console.log(error))
 		},
