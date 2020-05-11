@@ -1,3 +1,5 @@
+require('dotenv').config()
+console.log(process.env.DB_USER)
 const express = require('express')
 const path = require('path')
 const database = require('./utils/database')
