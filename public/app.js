@@ -55,13 +55,17 @@ new Vue({el: '#app',
 		},
 		removeTodo(id) {
 			console.log('delete', id);
-			fetch('/api/todo/' + id, {
-				method: 'delete',
-			})
-			.then(() => {
-				this.todos = this.todos.filter(t => t.id !== id)
-			})
-			.catch(error => console.log(error))
+			fetch('/api/todo/' + id, {method: 'delete'})
+				.then(res => res.status ===200 ? res.json() : false)
+				.then(response => {
+					if (response && response.message) {
+						console.log(response.message);
+						alert(response.message);
+					} else {
+						this.todos = this.todos.filter(t => t.id !== id);
+					}
+				})
+				.catch(error => console.log(error.message));
 		}
 	},
 	filters: {

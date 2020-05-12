@@ -43,9 +43,15 @@ router.put('/:id', async (req, res) => {
 // удаление задачи
 router.delete('/:id', async (req, res) => {
 	try {
-		const item = await Todo.findByPk(+req.params.id)
-		await item.destroy()
-		res.status(204).json({}) // 204 - контента нет, но все ОК
+		// защитим демо-данные
+		if (+req.params.id > 3) {
+			const item = await Todo.findByPk(+req.params.id)
+			await item.destroy()
+			res.status(204).json({}) // 204 - контента нет, но все ОК			
+		} else {
+			const message = 'Задачи с ID 1-3 не удаляются - это демо данные. Сервер вернул статус 200 - это нормально.';
+			res.status(200).json({message: message}) // 200 ? 500
+		}
 	} catch (error) {
 		console.log(error)
 		res.status(500).json({message: 'Server error!'})
