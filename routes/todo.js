@@ -44,12 +44,12 @@ router.put('/:id', async (req, res) => {
 router.delete('/:id', async (req, res) => {
 	try {
 		// защитим демо-данные
-		if (+req.params.id > 3) {
+		if (+req.params.id > 10) {
 			const item = await Todo.findByPk(+req.params.id)
 			await item.destroy()
 			res.status(204).json({}) // 204 - контента нет, но все ОК			
 		} else {
-			const message = 'Задачи с ID 1-3 не удаляются - это демо данные. Сервер вернул статус 200 - это нормально.';
+			const message = 'Задачи с ID 1-10 не удаляются - это демо данные. Сервер вернул статус 200 - это нормально.';
 			res.status(200).json({message: message}) // 200 ? 500
 		}
 	} catch (error) {

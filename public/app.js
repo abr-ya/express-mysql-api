@@ -25,6 +25,7 @@ new Vue({el: '#app',
 			if (!title) {
 				return
 			}
+			// console.log(JSON.stringify({title}))
 			fetch('/api/todo', {
 				method: 'post',
 				headers: {'Content-type': 'application/json'},
